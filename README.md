@@ -1,4 +1,4 @@
-# SomeAuth
+# [SomeAuth](https://pypi.org/project/django-someauth/)
 
 A Python package based on **Django Allauth**, simplified to bypass repetitive setup. Comes with **pre-styled Tailwind templates** for quick integration of authentication and social login.
 
