@@ -1,0 +1,8 @@
+# Ignore non-Python stuff for GitHub language stats
+someauth/static/* linguist-vendored
+someauth/templates/* linguist-vendored
+someauth/migrations/* linguist-vendored
+themes/* linguist-vendored
+
+# Treat all *.py files as Python (just in case)
+*.py linguist-language=Python
