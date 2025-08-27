@@ -1,0 +1,12 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.db
+MANIFEST.in
+*.egg-info/
+/dist/
+build/
+pyproject.toml

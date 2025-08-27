@@ -1,0 +1,37 @@
+{% extends "account/base_entrance.html" %}
+{% load i18n %}
+{% block head_title %}
+    {% trans "Sign Out" %}
+{% endblock head_title %}
+
+{% block content %}
+<div class="h-screen bg-gray-50 flex flex-col justify-center items-center">
+
+    <div class="bg-white border border-gray-300 w-80 md:w-96 py-8 px-4 flex items-center flex-col mb-3">
+        <h1 class="text-xl font-semibold mb-4">
+            {% trans "Sign Out" %}
+        </h1>
+
+        {% if user.is_authenticated %}
+            <p class="mb-2 text-sm text-gray-600">
+                {% include "account/snippets/already_logged_in.html" %}
+            </p>
+        {% endif %}
+
+        <p class="text-md text-center text-gray-700 mt-3">
+            {% blocktrans %}Are you sure you want to sign out?{% endblocktrans %}
+        </p>
+        
+
+        <form method="post" action="{% url 'account_logout' %}">
+            {% csrf_token %}
+            {{ redirect_field }}
+            <button type="submit" class="btn btn-error mt-4" >
+                    {% trans "Sign Out" %}
+            </button>
+        </form>
+    </div>
+    
+</div>
+    
+{% endblock content %}

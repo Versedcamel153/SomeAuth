@@ -1,0 +1,111 @@
+{% extends "account/base_entrance.html" %}
+
+{% load static tailwind_tags %}
+{% load socialaccount %}
+{% load someauth_tags %}
+{% load i18n %}
+
+{% block head_title %}
+    {% trans "Sign In" %}
+{% endblock head_title %}
+
+{% block content %}
+    <div class="h-screen bg-gray-50 flex flex-col justify-center items-center">
+        <!-- <div class="avatar mb-4 relative top-8">
+                <div class="w-24 rounded">
+                    <img
+                        src="https://res.cloudinary.com/dyzsn0fxu/image/upload/v1753392856/ChatGPT_Image_Apr_30_2025_08_22_01_PM_2_wdgri2.png" />
+                </div>
+        </div> -->
+        <div class="bg-white border border-gray-300 w-80 md:w-96 py-8 flex items-center flex-col mb-3">
+            <p class="font-bold text-2xl">Sign In</p>
+            <p class="text-sm text-center text-gray-500">Login to see photos and videos from your friends.</p>
+
+                      
+            <form class="mt-8 w-64 md:w-80 flex flex-col" method="post" action="{% url 'account_login' %}">
+                {% csrf_token %}
+
+            <!-- Non-field errors (e.g. password mismatch) -->
+            {% for error in  form.non_field_errors %}
+                <div role="alert" class="alert alert-error alert-soft mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span class="text-xs md:text-sm">{{ error }}</span>
+                </div>
+            {% endfor %}
+
+                
+                <!-- Email -->
+                <input
+                    class="text-xs mt-2 w-full rounded border bg-gray-100 border-gray-300 px-2 py-2 focus:outline-none focus:border-gray-400 active:outline-none"
+                    id="email" name="login" placeholder="Email" type="email" required autocomplete="email">
+                {% for error in form.login.errors %}
+                    <p class="text-xs mt-1 text-red-500 md:text-sm">{{ error }}</p>
+                {% endfor %}
+
+                <!-- Password  -->
+               <div class="w-full mt-2">
+                    <div class="flex items-center border rounded bg-gray-100 border-gray-300 focus-within:border-gray-400">
+                        <input
+                            class="text-xs w-full bg-transparent px-2 py-2 focus:outline-none"
+                            name="password"
+                            id="password"
+                            placeholder="Password"
+                            type="password"
+                            required
+                            autocomplete="new-password"
+                            minlength="8" />
+
+                        <!-- Swap visibility toggle -->
+                        <label class="swap swap-rotate px-2 cursor-pointer flex-shrink-0">
+                            <input type="checkbox" data-target="password" onchange="togglePassword(this)" />
+
+                            <!-- Show Icon (eye open) -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-5 swap-on">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            </svg>
+
+                            <!-- Hide Icon (eye closed) -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-5 swap-off">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
+                            </svg>
+                        </label>
+                    </div>
+
+                    <!-- Error message -->
+                    {% for error in form.password2.errors %}
+                        <p class="text-xs mt-1 text-red-500 md:text-sm">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+
+            <a href="{% url 'account_reset_password' %}" class="link link-hover text-xs text-accent cursor-pointer mt-3">Forgot password?</a>
+
+                <button type="submit" class="btn btn-primary mt-4 font-medium">Log In</button>
+            </form>
+
+            <!-- Social buttons -->
+            {% quickauth_social_buttons %}
+
+        </div>
+        <div class="bg-white border border-gray-300 text-center w-80 md:w-96 py-4">
+            <span class="text-sm">Don't have an account?</span>
+            <a href="{% url 'account_signup' %}" class="link link-hover text-accent text-sm font-semibold">Sign up</a>
+        </div>
+        <!-- <div class="mt-3 text-center">
+            <span class="text-xs">Get the app</span>
+            <div class="flex mt-3 space-x-2">
+                <div class="bg-no-repeat apple-store-logo"></div>
+                <div class="bg-no-repeat google-store-logo"></div>
+            </div>
+        </div> -->
+    </div>
+
+{% endblock content %}

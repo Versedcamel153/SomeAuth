@@ -1,0 +1,31 @@
+{% load static tailwind_tags %}
+{% load socialaccount %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block head_title %}
+        {% endblock head_title %}
+    </title>
+    <link rel="stylesheet" href="{% static 'someauth/styles.css' %}">
+
+   
+</head>
+<body>
+    {% block content %}
+    {% endblock %}
+</body>
+<script>
+function togglePassword(el) {
+  const inputId = el.getAttribute("data-target");
+  const input = document.getElementById(inputId);
+  if (input) {
+    input.type = input.type === "password" ? "text" : "password";
+  }
+}
+</script>
+</html>
